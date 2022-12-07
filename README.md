@@ -1,34 +1,91 @@
 # BRdev-Pagarme
 Api Pagarme V5
 
-use BRdev\Pagarme\Client;
+```bash
+"brdev/pagarme": "1.0"
+```
 
-require __DIR__."/../vendor/autoload.php";
+or run
 
-$token = "---sk_test---";
-$pagarme = new Client($token);
+```bash
+composer require brdev/pagarme
+```
 
+#### 
+```php
+<?php
+$pagarme = new BRdev\Pagarme\Client($token);
+
+```
+
+#### Created new costumer
+```php
 $user = $pagarme->costumer("Luciano hang","luciano2@outlook.com","108.383.820-29","CPF","15981070774");
+$user->callback()
+```
 
-//$getUser = $pagarme->getCostumer($user->callback()->id);
+#### Get costumer
+```php
+$getUser = $pagarme->getCostumer($cusId);
+$getUser->callback()
+```
 
-//$updateUser = $pagarme->UpdateCostumer($user->callback()->id,"Vinicius Nogueira","vinicius1@outlook.com","108.383.820-29","CPF","15981070774");
+#### Update costumer
+```php
+$updateUser = $pagarme->UpdateCostumer($cusId,"Vinicius Nogueira","vinicius1@outlook.com","108.383.820-29","CPF","15981070774");
+$updateUser->callback()
+```
 
-//$creditCard = $pagarme->createdCreditCard("-----","5425 6489 5749 2251","Vinicius Nogueira","01/2024","123","18220-000","SP","itapetininga","Rua dos Bobos");
+#### Created creditCard
+```php
+$creditCard = $pagarme->createdCreditCard($cusId,"5425 6489 5749 2251","Vinicius Nogueira","01/2024","123","18220-000","SP","itapetininga","Rua dos Bobos");
+$creditCard->callback()
+```
 
-//$getCreditCard = $pagarme->getCreditCard("cus_id----","card_------");
+#### Created creditCard
+```php
+$getCreditCard = $pagarme->getCreditCard($cusId,$cardId);
+$getCreditCard->callback()
+```
 
-//$updateCreditCard = $pagarme->updateCreditCard("cus_id----","card_------","5425 6489 5749 2251","Vinicius Nogueira","01/2024","123","18220-200","SP","itapetininga","Rua dos Bobos");
+#### Update creditCard
+```php
+$updateCreditCard = $pagarme->updateCreditCard($cusId,$cardId,"5425 6489 5749 2251","Vinicius Nogueira","01/2024","123","18220-200","SP","itapetininga","Rua dos Bobos");
+$updateCreditCard->callback()
+```
 
-//$renewCreditCard = $pagarme->renewCreditCard("cus_id----","card_------");
+#### Renew creditCard
+```php
+$renewCreditCard = $pagarme->renewCreditCard($cusId,$cardId);
+$renewCreditCard->callback()
+```
 
-//$deleteCreditCard = $pagarme->deleteCreditCard("cus_id----","card_------");
+#### Delete creditCard
+```php
+$deleteCreditCard = $pagarme->deleteCreditCard($cusId,$cardId);
+$deleteCreditCard->callback()
+```
 
-//$trasactionCredit = $pagarme->transactionCrediCard("cus_id----","card_------",uniqid(),"testando","10000","1",8);
+#### Transaction creditCard
+```php
+$trasactionCredit = $pagarme->transactionCrediCard($cusId,$cardId,uniqid(),"test","10000","1",8);
+$trasactionCredit->callback()
+```
 
-//$trasactionPIX = $pagarme->transactionPix("cus_id----",uniqid(),"testando","10000","1","800");
+#### Transaction PIX
+```php
+$trasactionPIX = $pagarme->transactionPix($cusId,uniqid(),"testando","10000","1","800");
+$trasactionPIX->callback()
+```
 
-//$getOrder = $pagarme->getOrder("or_PZVrzjpiAix7q1me");
+#### Get Order
+```php
+$getOrder = $pagarme->getOrder("or_PZVrzjpiAix7q1me");
+$getOrder->callback()
+```
 
-$closeOrder = $pagarme->closeOrder("or_dj7lW2dtKZs7JvQm");
-var_dump($closeOrder->callback());
+#### Closed Order
+```php
+$closeOrder = $pagarme->closeOrder("or_dj7lW2dtKZs7JvQm","canceled");
+$closeOrder->callback()
+```

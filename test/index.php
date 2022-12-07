@@ -29,5 +29,4 @@ $user = $pagarme->costumer("Luciano hang","luciano2@outlook.com","108.383.820-29
 
 //$getOrder = $pagarme->getOrder("or_PZVrzjpiAix7q1me");
 
-$closeOrder = $pagarme->closeOrder("or_dj7lW2dtKZs7JvQm");
-var_dump($closeOrder->callback());
+//$closeOrder = $pagarme->closeOrder("or_dj7lW2dtKZs7JvQm");

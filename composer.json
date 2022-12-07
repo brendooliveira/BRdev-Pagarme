@@ -1,0 +1,27 @@
+{
+    "name": "brdev/pagarme",
+    "description": "Biblioteca Consumindo a api da pagarme V5",
+    "keywords": [
+        "Pagarme",
+        "api",
+        "V5",
+        "SDK"
+    ],
+    "homepage": "https://criativodahora.com.br",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Brendo Oliveira",
+            "email": "brendo.dev@outlook.com",
+            "role": "Developer" 
+        }
+    ],
+    "require": {
+        "php": ">=7.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "BRdev\\Pagarme\\": "src"
+        }
+    }
+}

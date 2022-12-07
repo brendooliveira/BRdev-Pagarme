@@ -1,5 +1,4 @@
-# BRdev-Pagarme
-Api Pagarme V5
+<?php
 
 use BRdev\Pagarme\Client;
 

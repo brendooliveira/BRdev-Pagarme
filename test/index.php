@@ -4,10 +4,12 @@ use BRdev\Pagarme\Client;
 
 require __DIR__."/../vendor/autoload.php";
 
+//---sk_test---
+
 $token = "---sk_test---";
 $pagarme = new Client($token);
 
-$user = $pagarme->costumer("Luciano hang","luciano2@outlook.com","108.383.820-29","CPF","15981070774");
+//$user = $pagarme->costumer("Luciano hang","luciano2@outlook.com","108.383.820-29","CPF","15981070774");
 
 //$getUser = $pagarme->getCostumer($user->callback()->id);
 
@@ -27,6 +29,23 @@ $user = $pagarme->costumer("Luciano hang","luciano2@outlook.com","108.383.820-29
 
 //$trasactionPIX = $pagarme->transactionPix("cus_id----",uniqid(),"testando","10000","1","800");
 
-//$getOrder = $pagarme->getOrder("or_PZVrzjpiAix7q1me");
+//$getOrder = $pagarme->getOrder("or_-------");
 
-//$closeOrder = $pagarme->closeOrder("or_dj7lW2dtKZs7JvQm");
+//$closeOrder = $pagarme->closeOrder("or_-----");
+
+//$deleteCharge = $pagarme->deleteCharge("ch_-----");
+
+//$createdRecipients = $pagarme->CreatedRecipients("Meu nome Jose","jose@hotmail.com","108.383.820-29","123","0001","12345","1");
+
+//$EditRecipients = $pagarme->EditRecipients("rp_-----","Jose Santos","jose@hotmail.com");
+
+//$getRecipients = $pagarme->getRecipient("rp_-------");
+
+//$EditRecipientsBank = $pagarme->EditRecipientBank("rp_-------","Jose Santos","108.383.820-29","260","0002","12345","1");
+
+//$getBalance = $pagarme->getBalance("rp_-------");
+
+//$withdrawals = $pagarme->withdrawals("rp_-------", "1000");
+
+//$GetWithdrawals = $pagarme->GetWithdrawals("rp_-------", "ID");
+//var_dump($withdrawals->callback());

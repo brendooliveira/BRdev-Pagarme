@@ -315,6 +315,182 @@ class Client
         return $this;
     }
 
+    public function getCharge(string $ChId)
+    {
+        $this->endpoint = "/charges/$ChId";
+        $this->get();
+
+        return $this;
+    }
+
+    public function deleteCharge(string $ChId, ?string $amount = "")
+    {
+        if($amount){
+            $this->build = [
+                "amount" => (int)$this->number($amount)
+            ];
+        }
+        
+
+        $this->endpoint = "/charges/$ChId";
+        $this->delete();
+
+        return $this;
+    }
+
+    public function CreatedRecipients(
+        string $name,
+        string $email,
+        string $document,
+        string $bank,
+        string $branch_number,
+        string $account_number,
+        string $account_check_digit,
+        string $type = "individual",
+        ?string $branch_check_digit = "0",
+        string $bank_type = "checking",
+        bool $transfer_enable = true,
+        ?string $transfer_interval = "Weekly",
+        ?int $transfer_day = 5
+    )
+    {
+        $this->build = [
+            "default_bank_account" => [
+                "holder_name" => $name,
+                "bank" => $this->number($bank),
+                "branch_number" => $this->number($branch_number),
+                "branch_check_digit" => $this->number($branch_check_digit),
+                "account_number" => $this->number($account_number),
+                "account_check_digit" => $this->number($account_check_digit),
+                "holder_type" => $type,
+                "holder_document" => $this->number($document),
+                "type" => $bank_type
+            ],
+            "transfer_settings" => [
+                "transfer_enabled" => $transfer_enable,
+                "transfer_day" => (int)$transfer_day,
+                "transfer_interval" => $transfer_interval
+            ],
+            "name" => $name,
+            "email" => $email,
+            "document" => $this->number($document),
+            "type" => $type
+        ];
+
+        $this->endpoint = "/recipients";
+        $this->post();
+
+        if(empty($this->callback()->id)){
+            $this->callback->message;
+            return;
+        }
+
+        return $this;
+    } 
+
+    public function EditRecipients(
+        string $recipient_id,
+        string $name,
+        string $email,
+        ?string $type = "individual"
+    )
+    {
+        $this->build = [
+            "name" => $name,
+            "email" => $email,
+            "type" => $type
+        ];
+
+        $this->endpoint = "/recipients/$recipient_id";
+        $this->put();
+
+        if(empty($this->callback()->id)){
+            $this->callback->message;
+            return;
+        }
+
+        return $this;
+    }
+
+    public function getRecipient($recipient_id)
+    {
+        $this->endpoint = "/recipients/$recipient_id";
+        $this->get();
+
+        if(empty($this->callback()->id)){
+            $this->callback->message;
+            return;
+        }
+
+        return $this;
+    }
+
+    public function EditRecipientBank(
+        string $recipient_id,
+        string $name,
+        string $document,
+        string $bank,
+        string $branch_number,
+        string $account_number,
+        string $account_check_digit,
+        string $type = "individual",
+        ?string $branch_check_digit = "0",
+        string $bank_type = "checking"
+    )
+    {
+        $this->build = [
+            "bank_account" => [
+                "holder_name" => $name,
+                "bank" => $this->number($bank),
+                "branch_number" => $this->number($branch_number),
+                "branch_check_digit" => $this->number($branch_check_digit),
+                "account_number" => $this->number($account_number),
+                "account_check_digit" => $this->number($account_check_digit),
+                "holder_type" => $type,
+                "holder_document" => $this->number($document),
+                "type" => $bank_type
+            ]
+        ];
+
+        $this->endpoint = "/recipients/$recipient_id/default-bank-account";
+        $this->patch();
+
+        if(empty($this->callback()->id)){
+            $this;
+            return;
+        }
+
+        return $this;
+    } 
+
+    public function getBalance(string $recipient_id)
+    {
+        $this->endpoint = "/recipients/$recipient_id/balance";
+        $this->get();
+
+        return $this;
+    }
+
+    public function withdrawals(string $recipient_id, int $amount)
+    {
+        $this->build = [
+            "amount" => $amount
+        ]; 
+
+        $this->endpoint = "/recipients/$recipient_id/withdrawals";
+        $this->post();
+
+        return $this;
+    }
+
+    public function GetWithdrawals(string $recipient_id, int $withdrawals_id)
+    {
+        $this->endpoint = "/recipients/$recipient_id/withdrawals/$withdrawals_id";
+        $this->get();
+
+        return $this;
+    }
+
     public function callback()
     {
         return $this->callback;
@@ -410,6 +586,7 @@ class Client
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($this->build));
 
         $headers = array();
         $headers[] = 'Accept: application/json';

@@ -2,7 +2,7 @@
 Api Pagarme V5
 
 ```bash
-"brdev/pagarme": "1.0"
+"brdev/pagarme": "1.2"
 ```
 
 or run

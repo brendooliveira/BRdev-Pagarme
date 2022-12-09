@@ -293,6 +293,251 @@ class Client
         return $this;
     }
 
+
+    public function transactionBoleto(
+        string $cusId,
+        string $code,
+        string $description,
+        string $amount_cents,
+        string $quantity,
+        ?string $bank = "237"
+    )
+    {
+
+        $this->build = [
+            "items" => [
+                [
+                    "code" => $this->number($code),
+                    "description" => $this->char($description),
+                    "amount" => $this->number($amount_cents),
+                    "quantity" => $this->number($quantity)
+                ]
+            ],
+            "customer_id" => $cusId,
+            "payments" => [
+                [
+                    "payment_method" => "boleto",
+                    "boleto" => [
+                        "bank" => (int)$this->number($bank)
+                    ]
+                ]
+            ]
+        ];
+
+        $this->endpoint = "/orders";
+        $this->post();
+
+        if (empty($this->callback)) {
+            return null;
+        }
+
+        return $this;
+    }
+
+    public function transactionCrediCardSplit(
+        string $cusId,
+        string $hashCard,
+        string $code,
+        string $description,
+        string $amount_cents,
+        string $quantity,
+        int $installments,
+        string $rpOne,
+        string $percetageOne,
+        string $rpTwo,
+        string $percetageTwo
+    )
+    {
+
+        $this->build = [
+            "items" => [
+                [
+                    "code" => $this->number($code),
+                    "description" => $this->char($description),
+                    "amount" => $this->number($amount_cents),
+                    "quantity" => $this->number($quantity)
+                ]
+            ],
+            "customer_id" => $cusId,
+            "payments" => [
+                [
+                    "payment_method" => "credit_card",
+                    "credit_card" => [
+                        "card_id" => $hashCard,
+                        "statement_descriptor" => $this->char($description),
+                        "recurrence" => true,
+                        "antifraud_enabled" => false,
+                        "installments" => $installments
+                    ],
+                    "split" => [
+                        [
+                             "options" => [
+                                  "charge_processing_fee" => true,
+                                  "charge_remainder_fee" => true,
+                                  "liable" => true
+                             ],
+                             "amount" => $percetageOne,
+                             "type" => "percentage",
+                             "recipient_id" => $rpOne
+                        ],
+                        [
+                             "options" => [
+                                  "charge_processing_fee" => false,
+                                  "charge_remainder_fee" => false,
+                                  "liable" => false
+                             ],
+                             "amount" => $percetageTwo,
+                             "type" => "percentage",
+                             "recipient_id" => $rpTwo
+                        ]
+                   ],
+                ]
+            ]
+        ];
+
+        $this->endpoint = "/orders";
+        $this->post();
+
+        if (empty($this->callback->status) || $this->callback->status != "paid") {
+            return $this->callback->message;
+        }
+
+        return $this;
+    }
+
+    public function transactionPixSplit(
+        string $cusId,
+        string $code,
+        string $description,
+        string $amount_cents,
+        string $quantity,
+        string $timeExpires,
+        string $rpOne,
+        string $percetageOne,
+        string $rpTwo,
+        string $percetageTwo
+    )
+    {
+
+        $this->build = [
+            "items" => [
+                [
+                    "code" => $this->number($code),
+                    "description" => $this->char($description),
+                    "amount" => $this->number($amount_cents),
+                    "quantity" => $this->number($quantity)
+                ]
+            ],
+            "customer_id" => $cusId,
+            "payments" => [
+                [
+                    "payment_method" => "pix",
+                    "pix" => [
+                        "expires_in" => (int)$this->number($timeExpires)
+                    ],
+                    "split" => [
+                        [
+                             "options" => [
+                                  "charge_processing_fee" => true,
+                                  "charge_remainder_fee" => true,
+                                  "liable" => true
+                             ],
+                             "amount" => $percetageOne,
+                             "type" => "percentage",
+                             "recipient_id" => $rpOne
+                        ],
+                        [
+                             "options" => [
+                                  "charge_processing_fee" => false,
+                                  "charge_remainder_fee" => false,
+                                  "liable" => false
+                             ],
+                             "amount" => $percetageTwo,
+                             "type" => "percentage",
+                             "recipient_id" => $rpTwo
+                        ]
+                   ],
+                ]
+            ]
+        ];
+
+        $this->endpoint = "/orders";
+        $this->post();
+
+        if (empty($this->callback)) {
+            return null;
+        }
+
+        return $this;
+    }
+
+
+    public function transactionBoletoSplit(
+        string $cusId,
+        string $code,
+        string $description,
+        string $amount_cents,
+        string $quantity,
+        string $rpOne,
+        string $percetageOne,
+        string $rpTwo,
+        string $percetageTwo,
+        ?string $bank = "237"
+    )
+    {
+
+        $this->build = [
+            "items" => [
+                [
+                    "code" => $this->number($code),
+                    "description" => $this->char($description),
+                    "amount" => $this->number($amount_cents),
+                    "quantity" => $this->number($quantity)
+                ]
+            ],
+            "customer_id" => $cusId,
+            "payments" => [
+                [
+                    "payment_method" => "boleto",
+                    "boleto" => [
+                        "bank" => (int)$this->number($bank)
+                    ],
+                    "split" => [
+                        [
+                             "options" => [
+                                  "charge_processing_fee" => true,
+                                  "charge_remainder_fee" => true,
+                                  "liable" => true
+                             ],
+                             "amount" => $percetageOne,
+                             "type" => "percentage",
+                             "recipient_id" => $rpOne
+                        ],
+                        [
+                             "options" => [
+                                  "charge_processing_fee" => false,
+                                  "charge_remainder_fee" => false,
+                                  "liable" => false
+                             ],
+                             "amount" => $percetageTwo,
+                             "type" => "percentage",
+                             "recipient_id" => $rpTwo
+                        ]
+                   ],
+                ]
+            ]
+        ];
+
+        $this->endpoint = "/orders";
+        $this->post();
+
+        if (empty($this->callback)) {
+            return null;
+        }
+
+        return $this;
+    }
+
     public function getOrder(string $orderId)
     {
         $this->endpoint = "/orders/$orderId";

@@ -6,8 +6,9 @@ require __DIR__."/../vendor/autoload.php";
 
 //---sk_test---
 
-$token = "---sk_test---";
+$token = "-----sk_test----";
 $pagarme = new Client($token);
+
 
 //$user = $pagarme->costumer("Luciano hang","luciano2@outlook.com","108.383.820-29","CPF","15981070774");
 
@@ -28,6 +29,8 @@ $pagarme = new Client($token);
 //$trasactionCredit = $pagarme->transactionCrediCard("cus_id----","card_------",uniqid(),"testando","10000","1",8);
 
 //$trasactionPIX = $pagarme->transactionPix("cus_id----",uniqid(),"testando","10000","1","800");
+
+//$boleto = $pagarme->transactionBoleto("cus_-------",uniqid(),"testando a api","1000","1");
 
 //$getOrder = $pagarme->getOrder("or_-------");
 

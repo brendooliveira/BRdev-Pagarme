@@ -77,6 +77,26 @@ $trasactionCredit->callback();
 $trasactionPIX = $pagarme->transactionPix($cusId,uniqid(),"testando","10000","1","800");
 $trasactionPIX->callback();
 ```
+#### Transaction Boleto
+```php
+$transactionBoleto = $pagarme->transactionBoleto("cus_---",uniqid(),"testando a api","1000","1");
+$transactionBoleto->callback();
+```
+
+#### Transaction creditCardSplit
+```php
+$pagarme->transactionCrediCardSplit("cus_--","card_---",uniqid(),"testando split","1000","1","2","rp_---","5","rp_-----","95");
+```
+
+#### Transaction PixSplit
+```php
+$pagarme->transactionPixSplit("cus_---",uniqid(),"testando split","1000","1","800","rp_---","2","rp_---","98");
+```
+
+#### Transaction BoletoSplit
+```php
+$splitBoleto = $pagarme->transactionBoletoSplit("cus_----",uniqid(),"testando split","1000","1","rp_-----","2","rp_-----","100");
+```
 
 #### Get Order
 ```php
